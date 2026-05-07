@@ -1,0 +1,75 @@
+-- Export current OneNote page to PDF in /tmp/onenote_preview/
+-- Run this from Script Editor first to test before integrating with Python
+
+set outputFolder to "/Users/architsharma/Documents/Preview/"
+set outputFile to outputFolder & "preview.pdf"
+
+-- Create the output folder if it doesn't exist
+do shell script "mkdir -p " & outputFolder
+
+-- Bring OneNote to foreground
+tell application "Microsoft OneNote"
+	activate
+end tell
+
+-- Small delay to let OneNote come to foreground
+delay 0.5
+
+tell application "System Events"
+	tell process "Microsoft OneNote"
+		
+		-- Click the File menu
+		set FileButton to menu bar item "File" of menu bar 1
+		click FileButton
+		delay 0.3
+		
+		-- Click "Save as PDF" (adjust this name if it differs on your OneNote version)
+		set fileMenu to menu 1 of FileButton
+		set SaveAsPDF to menu item "Save As PDF" of fileMenu
+		click SaveAsPDF
+		delay 1.0
+		
+		-- A Save dialog should now be open
+		-- Use Cmd+Shift+G to open the "Go to Folder" prompt
+		-- This lets us type the exact path instead of clicking through folders
+		-- Bring OneNote to the front
+		keystroke "g" using {command down, shift down}
+		delay 0.5
+		
+		-- Type the output folder path
+		keystroke outputFolder
+		delay 0.3
+		
+		-- Press Enter to navigate to the folder
+		key code 36
+		delay 0.5
+		
+		-- Clear whatever filename is in the name field and type our filename
+		-- Cmd+A to select all text in the filename field, then type new name
+		keystroke "a" using {command down}
+		delay 0.2
+		keystroke "preview.pdf"
+		delay 0.3
+		
+		-- Press Enter to save
+		key code 36
+		delay 0.5
+		
+		-- If OneNote asks to overwrite an existing file, confirm it
+		-- This clicks "Replace" if that dialog appears
+		try
+			click button "Replace" of sheet 1 of window 1
+		end try
+		
+	end tell
+end tell
+
+-- Confirm the file was saved
+delay 0.5
+tell application "System Events"
+	if exists file outputFile then
+		display notification "PDF saved to " & outputFile with title "OneNote Export"
+	else
+		display notification "Something went wrong — file not found" with title "OneNote Export"
+	end if
+end tell

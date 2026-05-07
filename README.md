@@ -11,7 +11,7 @@
     * However, this is obviously impractical - the preview is a tiny window, and doesnt update in real time. It also doesn't show up to the viewer in real time.
 
 ### Solution Version 1:
-* Export current page to temp PDF using OneNote COM API `pywin32`
+* Export current page to temp PDF using `applescript` macro
 * Convert PDF to image using `pdf2image`
 * Create overlay on the side using `tkinter`
 * Refresh the overlay
