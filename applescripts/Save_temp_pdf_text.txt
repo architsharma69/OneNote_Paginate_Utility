@@ -64,6 +64,28 @@ tell application "System Events"
 	end tell
 end tell
 
+-- Short loop script to check if the loading screen has disappeared
+set maxWait to 60
+set elapsed to 0
+
+repeat
+	delay 0.5
+	set elapsed to elapsed + 0.5
+	
+	tell application "System Events"
+		tell process "Microsoft OneNote"
+			set dialogOpen to exists sheet 1 of window 1
+		end tell
+	end tell
+	
+	if dialogOpen is false then exit repeat
+	
+	if elapsed ≥ maxWait then
+		display alert "Export timed out" message "OneNote took too long to save the PDF." buttons {"OK"}
+		error "Timed out waiting for save dialog"
+	end if
+end repeat
+
 -- Confirm the file was saved
 delay 0.5
 tell application "System Events"
