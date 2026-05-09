@@ -1,8 +1,10 @@
--- Export current OneNote page to PDF in /tmp/onenote_preview/
 -- Run this from Script Editor first to test before integrating with Python
 
-set outputFolder to "/Users/architsharma/Documents/Preview/"
-set outputFile to outputFolder & "preview.pdf"
+on run argv
+    set outputFolder to item 1 of argv
+    set outputFile to item 2 of argv
+    set filename to do shell script "basename " & quoted form of outputFile
+
 
 -- Create the output folder if it doesn't exist
 do shell script "mkdir -p " & outputFolder
@@ -48,7 +50,7 @@ tell application "System Events"
 		-- Cmd+A to select all text in the filename field, then type new name
 		keystroke "a" using {command down}
 		delay 0.2
-		keystroke "preview.pdf"
+		keystroke filename
 		delay 0.3
 		
 		-- Press Enter to save
@@ -95,3 +97,5 @@ tell application "System Events"
 		display notification "Something went wrong — file not found" with title "OneNote Export"
 	end if
 end tell
+
+end run
