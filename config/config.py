@@ -5,8 +5,8 @@ CONFIG_PATH = Path(__file__).parent
 ROOT_PATH = CONFIG_PATH.parent
 
 TEMP_DIR     = ROOT_PATH / "temp_files"
-print(TEMP_DIR)
 TEMP_PDF     = TEMP_DIR / "preview.pdf"
+
 APPLESCRIPT  = CONFIG_PATH / "applescripts" / "Save_temp_pdf_text.txt"
 
 WINDOW_W     = 360          # overlay window width in pixels
