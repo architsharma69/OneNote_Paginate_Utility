@@ -32,7 +32,7 @@ def render_pdf(pdf_path: Path, width: int) -> list[Image.Image]:
     doc = fitz.open(str(pdf_path))
     resized = []
     for page in doc:
-        mat = fitz.Matrix(200 / 72, 200 / 72)   # 200 DPI (HD)
+        mat = fitz.Matrix(400 / 72, 400 / 72)   # 400 DPI
         pix = page.get_pixmap(matrix=mat)
         img = Image.frombytes("RGB", [pix.width, pix.height], pix.samples)
         ratio = width / img.width
