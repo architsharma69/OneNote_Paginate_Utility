@@ -19,6 +19,9 @@ def run_applescript():
     )
 
     if result.returncode != 0:
+        # Check if OneNote is not running (AppleScript will show notification)
+        if "OneNote not running" in result.stderr:
+            raise RuntimeError("OneNote not running")
         raise RuntimeError(f"AppleScript failed:\n{result.stderr}")
 
 
