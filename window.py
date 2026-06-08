@@ -27,11 +27,8 @@ class PreviewOverlay:
 
         self._build_ui()
 
-        # On first launch, try to load an existing PDF if present
-        if TEMP_PDF.exists():
-            self._load_pages_from_pdf()
-        else:
-            self._set_status("No preview yet — press Cmd+Shift+R to export", idle=True)
+        # On first launch, trigger a refresh to get the current OneNote page
+        self._trigger_refresh()
 
     # ── UI construction ───────────────────────────────────────────────────────
 
@@ -40,6 +37,7 @@ class PreviewOverlay:
         r.title(WINDOW_TITLE)
         r.resizable(True, True)  # Enable window resizing
         r.attributes("-topmost", True)          # always on top
+        r.attributes("-type", "utility")       # macOS: utility window stays above fullscreen apps
         r.configure(bg="#F0F0F0")
 
         # Position: top-right corner of screen
@@ -329,6 +327,7 @@ class PreviewOverlay:
             self.stop_btn.configure(state="disabled")
             self.root.deiconify()        # bring overlay back
             self.root.attributes("-topmost", True)
+            self.root.lift()             # Bring to front after rendering
 
     def _on_error(self, message: str):
         self._set_status("Error — see terminal for details", error=True)
