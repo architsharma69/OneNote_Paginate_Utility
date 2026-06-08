@@ -1,12 +1,13 @@
 from pathlib import Path
 from pynput import keyboard
 
-CONFIG_PATH = Path(__file__)
-ROOT_PATH = CONFIG_PATH.parent.parent
+CONFIG_PATH = Path(__file__).parent
+ROOT_PATH = CONFIG_PATH.parent
 
 TEMP_DIR     = ROOT_PATH / "temp_files"
 TEMP_PDF     = TEMP_DIR / "preview.pdf"
-APPLESCRIPT  = Path(__file__).parent / "applescripts/applescript.scpt"
+
+APPLESCRIPT  = CONFIG_PATH / "applescripts" / "Save_temp_pdf_text.txt"
 
 WINDOW_W     = 360          # overlay window width in pixels
 PAGE_W       = 300          # rendered page width inside the window

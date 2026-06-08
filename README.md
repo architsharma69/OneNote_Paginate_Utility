@@ -12,7 +12,7 @@
 
 ### Solution Version 1:
 * Export current page to temp PDF using `applescript` macro
-* Convert PDF to image using `pdf2image`
+* Convert PDF to image using `pymupdf`
 * Create overlay on the side using `tkinter`
 * Refresh the overlay
     * Using hotkeys with `keyboard`
