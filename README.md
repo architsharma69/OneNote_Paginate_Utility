@@ -10,10 +10,23 @@
 * Currently, one way to view page splits is to navigate to the print preview on OneNote. 
     * However, this is obviously impractical - the preview is a tiny window, and doesnt update in real time. It also doesn't show up to the viewer in real time.
 
-### Solution Version 1:
+### Solution Template:
 * Export current page to temp PDF using `applescript` macro
 * Convert PDF to image using `pymupdf`
 * Create overlay on the side using `tkinter`
 * Refresh the overlay
     * Using hotkeys with `keyboard`
     * On a timer
+
+### Version 1:
+Workflow & Functionalities:
+* Controlled by the orchestrator, `main.py`
+    * `Save_temp_pdf_text.txt` applescript saves as temp PDF
+    * Convert to PIL images
+    * Create resizable overlay using `tkinter`
+        * Has `navigation`, `refresh`, `stop` functionalities
+* Currently triggered by a macbook `shortcut`, which runs a simple shell script to trigger `main.py` based on keystroke
+
+Problems to work on:
+* PIL images still have terrible quality, changing DPI does not change image quality. Consider changing rendering method
+* For those that do not have `Shortcuts`, create a daemon that will trigger by keystroke, which can be inputted into `config.py`
