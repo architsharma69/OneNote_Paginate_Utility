@@ -5,9 +5,16 @@ on run argv
     set outputFile to item 2 of argv
     set filename to do shell script "basename " & quoted form of outputFile
 
-
 -- Create the output folder if it doesn't exist
 do shell script "mkdir -p " & outputFolder
+
+-- Check if OneNote is running
+tell application "System Events"
+	if not (exists process "Microsoft OneNote") then
+		display notification "OneNote is not running"
+		error "OneNote not running"
+	end if
+end tell
 
 -- Bring OneNote to foreground
 tell application "Microsoft OneNote"

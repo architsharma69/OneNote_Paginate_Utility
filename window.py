@@ -298,7 +298,14 @@ class PreviewOverlay:
             self.root.after(0, self._load_pages_from_pdf)
 
         except Exception as e:
-            self.root.after(0, lambda: self._on_error(str(e)))
+            error_msg = str(e)
+            # If OneNote not running, AppleScript already showed notification - exit silently
+            if "OneNote not running" in error_msg:
+                self.root.after(0, self.root.quit)
+                return
+            
+            # For other errors, show error UI
+            self.root.after(0, lambda msg=error_msg: self._on_error(msg))
 
     def _load_pages_from_pdf(self):
         """Render the PDF and update the UI. Must run on main thread."""
@@ -330,6 +337,7 @@ class PreviewOverlay:
             self.root.lift()             # Bring to front after rendering
 
     def _on_error(self, message: str):
+        """Handle rendering/other errors."""
         self._set_status("Error — see terminal for details", error=True)
         self.refresh_btn.configure(state="normal")
         self.stop_btn.configure(state="disabled")

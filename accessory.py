@@ -19,13 +19,16 @@ def run_applescript():
     )
 
     if result.returncode != 0:
+        # Check if OneNote is not running (AppleScript will show notification)
+        if "OneNote not running" in result.stderr:
+            raise RuntimeError("OneNote not running")
         raise RuntimeError(f"AppleScript failed:\n{result.stderr}")
 
 
 # Render temp PDF into PIL images -------------------------------------------------------------------
 
 def render_pdf(pdf_path: Path, width: int) -> list[Image.Image]:
-    """Convert PDF pages to PIL images scaled to the given width (200 DPI)."""
+    """Convert PDF pages to PIL images scaled to the given width"""
     if not pdf_path.exists():
         raise FileNotFoundError(f"PDF not found: {pdf_path}")
 
