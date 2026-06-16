@@ -28,7 +28,7 @@ def run_applescript():
 # Render temp PDF into PIL images -------------------------------------------------------------------
 
 def render_pdf(pdf_path: Path, width: int) -> list[Image.Image]:
-    """Convert PDF pages to PIL images scaled to the given width (200 DPI)."""
+    """Convert PDF pages to PIL images scaled to the given width"""
     if not pdf_path.exists():
         raise FileNotFoundError(f"PDF not found: {pdf_path}")
 

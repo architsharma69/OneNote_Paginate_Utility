@@ -29,4 +29,3 @@ Workflow & Functionalities:
 
 Problems to work on:
 * PIL images still have terrible quality, changing DPI does not change image quality. Consider changing rendering method
-* For those that do not have `Shortcuts`, create a daemon that will trigger by keystroke, which can be inputted into `config.py`
